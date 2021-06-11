@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ApiServices: CityWeatherService{
+class ListService: CityWeatherService{
    
     func getCityWeather<T: Codable>(with name: String, completion: @escaping (Result<T?, NetworkError>) -> Void)  {
         
