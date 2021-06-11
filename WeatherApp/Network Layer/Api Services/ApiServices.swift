@@ -7,12 +7,14 @@
 
 import Foundation
 
-protocol CityWeatherService {
-    func getCityWeather<T>(with name:String, completion: @escaping (Result<T,Error>) -> Void  )
-}
-
 class ApiServices: CityWeatherService{
-    func getCityWeather<T>(with name: String, completion: @escaping (Result<T, Error>) -> Void) {
+   
+    func getCityWeather<T: Codable>(with name: String, completion: @escaping (Result<T?, NetworkError>) -> Void)  {
         
+        let url = URLBuilder.init(path: .citySearch, queries: [QueryItem.init(queryName: .appID, queryValue: "0909090")])
+        
+        let networkModel = getNetworkRequestModel(url: url)
+        
+        callServer(networkModel: networkModel, T.self, completion: completion)
     }
 }

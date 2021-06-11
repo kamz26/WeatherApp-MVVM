@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 struct NetworkRequestModel {
     var urlString: String
@@ -25,6 +26,12 @@ struct NetworkRequestModel {
 struct NetworkResponseModel {
     var responseData: DataResponse<Any>?
     var error: NetworkError?
+}
+
+enum NetworkError: Error{
+    case noData
+    case decodingFailed
+    case networkResponse
 }
 
 
