@@ -30,7 +30,7 @@ protocol APIService : DecodeProtocol{
 }
 
 protocol CityWeatherService : APIService{
-    func getCityWeather<T: Codable>(with name:String, completion: @escaping (Swift.Result<T?,NetworkError>) -> Void)
+    func getCityWeather<T: Codable>(with name:String,  objectType:T.Type, completion: @escaping (Swift.Result<T?,NetworkError>) -> Void)
 }
 
 
@@ -61,40 +61,16 @@ extension DecodeProtocol{
 }
 
 extension APIService{
-    var alamofireManager:Alamofire.SessionManager{
-        
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [:]
-        let serverTrustPolicyManager =  ServerTrustPolicyManager(policies: serverTrustPolicies)
-        
-        let config = URLSessionConfiguration.default
-        
-        return Alamofire.SessionManager(
-            configuration: config,
-            serverTrustPolicyManager: serverTrustPolicyManager
-        )
-    }
     
-    @discardableResult
     func callServer<T:Codable>(networkModel:NetworkRequestModel, _ objectType: T.Type,completion: @escaping (Swift.Result<T?,NetworkError>) -> Void) -> DataRequest{
         
-        let requestType = networkModel.requestType
+        debugPrint(networkModel.urlString)
+        let urlStr = networkModel.urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? .init()
+        let request = URLRequest.init(url: URL.init(string: urlStr)!)
         
-        //Header params
-        var customHeaders: HTTPHeaders = networkModel.headerParams ?? [:]
-        if requestType == .post {
-            customHeaders.append(otherDict: ["Content-Type": "application/json","Accept" : "application/json"])
+        return Alamofire.request(request).responseJSON { (response) in
+            debugPrint(response)
+            completion(getDecodeData(objectType: T.self, responseData: response))
         }
-        
-        //Post params'
-        let postParameters: Parameters? = (requestType == .post || requestType == .put) ? networkModel.postParams ?? [:] : nil
-        
-        return alamofireManager.request(networkModel.urlString,
-                                        method: requestType,
-                                        parameters: postParameters,
-                                        encoding: JSONEncoding.default,
-                                        headers: customHeaders).responseJSON { (response) in
-                                            completion(getDecodeData(objectType: T.self, responseData: response))
-                                        }
-        
     }
 }

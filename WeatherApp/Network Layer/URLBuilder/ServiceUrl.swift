@@ -12,7 +12,7 @@ enum ServiceUrl{
     
     //MARK: - Base Url
     enum ServiceBaseUrl{
-        static let baseUrl = "http://api.openweathermap.org"
+        static let baseUrl = "https://api.openweathermap.org"
     }
     
     //MARK: - Request Key
@@ -43,7 +43,7 @@ enum ServiceUrl{
         
         var queryString = "?"
         for (index,query) in builder.queries.enumerated(){
-            queryString.append( index == builder.queries.count - 1 ? "\(query.queryName)=\(query.queryValue)" : "\(query.queryName)=\(query.queryValue)&" )
+            queryString.append( index == builder.queries.count - 1 ? "\(query.queryName.rawValue)=\(query.queryValue)" : "\(query.queryName.rawValue)=\(query.queryValue)&" )
         }
         return queryString
     }
