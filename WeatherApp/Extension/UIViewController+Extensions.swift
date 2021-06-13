@@ -42,11 +42,5 @@ extension UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    var topbarHeight: CGFloat {
-        
-        view.layoutIfNeeded()
-        
-        return UIApplication.shared.statusBarFrame.size.height +
-            (self.navigationController?.navigationBar.frame.height ?? 0.0)
-    } 
+    
 }

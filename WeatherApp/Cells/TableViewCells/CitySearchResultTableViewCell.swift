@@ -16,6 +16,8 @@ class CitySearchResultTableViewCell: UITableViewCell {
     @IBOutlet weak var sunsetTempLabel: UILabel!
     @IBOutlet weak var addFavourite: UIImageView!
     
+    var normalImage: UIImage = UIImage.init(named: "heart")!
+    var favImage: UIImage = UIImage.init(named: "heart_filled")!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,15 +30,18 @@ class CitySearchResultTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(with city: CitySearchResultModel?){
-        guard city != nil else {return}
-        cityName.text = city?.name ?? ""
+    func configureCell(with city: CitySearchViewModel?){
+        guard let city = city else {return}
         
-        minimumTemperatureLabel.text = city?.main?.formattedMinTemp ?? ""
-        maximumTemperatureLabel.text = city?.main?.formattedMaxTemp ?? ""
+        cityName.text = city.name
         
-        sunriseTempLabel.text = city?.sys?.sunriseFormattedTime
-        sunsetTempLabel.text = city?.sys?.sunsetFormattedTime
+        minimumTemperatureLabel.text = city.minTemp
+        maximumTemperatureLabel.text = city.maxTemp
+        
+        sunriseTempLabel.text = city.sunrise
+        sunsetTempLabel.text = city.sunset
+        
+        addFavourite.image = city.isFAv ? favImage : normalImage
     }
     
 }

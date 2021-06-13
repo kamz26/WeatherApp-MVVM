@@ -17,6 +17,7 @@ class SearchCityWeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.listVm = ListViewModel()
+        self.listVm.updateLocalFetch()
         viewSetup()
     }
     
@@ -46,13 +47,33 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
         return section == 0 ? nil : "Favourite"
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? listVm.citySearchResult.count :  listVm.citySearchResult.count
+        return section == 0 ? listVm.citySearchResult.count :  listVm.favSearchList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: CitySearchResultTableViewCell.self, for: indexPath)
+        
+        if indexPath.section == 0{
         cell.configureCell(with: listVm.citySearchResult[indexPath.row])
+        cell.addFavourite.addTapGestureRecognizer {
+            self.addToFav(index: indexPath.row)
+        }
+        }else{
+            cell.configureCell(with: listVm.favSearchList[indexPath.row])
+        }
         return cell
+    }
+    
+    func addToFav(index:Int){
+        listVm.addToFav(index: index){ error in
+            if error == nil{
+                DispatchQueue.main.async {
+                    self.citySearchResultTableView.reloadAsync()
+                }
+                
+            }
+        }
+        
     }
 }
 
