@@ -25,6 +25,7 @@
 		616ED9AF2675101400CED1BC /* CitySearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616ED9AE2675101400CED1BC /* CitySearchResultModel.swift */; };
 		61C26FEE267532AC002BB8C2 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C26FED267532AC002BB8C2 /* CustomView.swift */; };
 		61C26FF12675335F002BB8C2 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C26FF02675335F002BB8C2 /* UIView+Extensions.swift */; };
+		61C2702D2676548E002BB8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C2702C2676548E002BB8C2 /* Date+Extensions.swift */; };
 		7F00E2DA9D6709CD29D41E97 /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D4DCCFE585032291860DE1 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		616ED9AE2675101400CED1BC /* CitySearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchResultModel.swift; sourceTree = "<group>"; };
 		61C26FED267532AC002BB8C2 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		61C26FF02675335F002BB8C2 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		61C2702C2676548E002BB8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		DA46FA3A63C3798A4A4C1538 /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +119,7 @@
 				6105EF7F267408F500DB7B7B /* Dictionary+Extensions.swift */,
 				616ED9A9267509E100CED1BC /* UITableView+Extensions.swift */,
 				61C26FF02675335F002BB8C2 /* UIView+Extensions.swift */,
+				61C2702C2676548E002BB8C2 /* Date+Extensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				6105EF80267408F500DB7B7B /* Dictionary+Extensions.swift in Sources */,
 				616ED9AF2675101400CED1BC /* CitySearchResultModel.swift in Sources */,
 				6105EF5B26739B6600DB7B7B /* UIViewController+Extensions.swift in Sources */,
+				61C2702D2676548E002BB8C2 /* Date+Extensions.swift in Sources */,
 				6105EF6226739BE200DB7B7B /* SearchCityWeatherViewController.swift in Sources */,
 				6105EF6E26739F3200DB7B7B /* ServiceUrl.swift in Sources */,
 				6105EF732673F96300DB7B7B /* NetworkDataModel.swift in Sources */,

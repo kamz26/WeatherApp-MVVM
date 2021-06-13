@@ -39,8 +39,14 @@ class SearchCityWeatherViewController: UIViewController {
 }
 //MARK: - Delegate and Datasource
 extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? nil : "Favourite"
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listVm.citySearchResult.count
+        return section == 0 ? listVm.citySearchResult.count :  listVm.citySearchResult.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -14,6 +14,7 @@ class CitySearchResultTableViewCell: UITableViewCell {
     @IBOutlet weak var maximumTemperatureLabel: UILabel!
     @IBOutlet weak var sunriseTempLabel: UILabel!
     @IBOutlet weak var sunsetTempLabel: UILabel!
+    @IBOutlet weak var addFavourite: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +31,12 @@ class CitySearchResultTableViewCell: UITableViewCell {
     func configureCell(with city: CitySearchResultModel?){
         guard city != nil else {return}
         cityName.text = city?.name ?? ""
+        
+        minimumTemperatureLabel.text = city?.main?.formattedMinTemp ?? ""
+        maximumTemperatureLabel.text = city?.main?.formattedMaxTemp ?? ""
+        
+        sunriseTempLabel.text = city?.sys?.sunriseFormattedTime
+        sunsetTempLabel.text = city?.sys?.sunsetFormattedTime
     }
     
 }

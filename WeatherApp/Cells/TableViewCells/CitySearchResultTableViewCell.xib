@@ -148,16 +148,27 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="DeV-j9-DVT">
+                        <rect key="frame" x="429" y="20" width="30" height="30"/>
+                        <color key="tintColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="60u-Mm-rFc"/>
+                            <constraint firstAttribute="width" secondItem="DeV-j9-DVT" secondAttribute="height" multiplier="1:1" id="EeG-iY-saP"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="gTV-GL-SNo" secondAttribute="trailing" constant="10" id="C0U-jf-fxs"/>
                     <constraint firstItem="gTV-GL-SNo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Lc7-5H-GBV"/>
+                    <constraint firstItem="DeV-j9-DVT" firstAttribute="trailing" secondItem="gTV-GL-SNo" secondAttribute="trailing" constant="-10" id="Ndl-a8-dyq"/>
                     <constraint firstItem="gTV-GL-SNo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ZNr-LH-AUG"/>
                     <constraint firstAttribute="bottom" secondItem="gTV-GL-SNo" secondAttribute="bottom" constant="10" id="oNi-Ri-gMh"/>
+                    <constraint firstItem="DeV-j9-DVT" firstAttribute="top" secondItem="gTV-GL-SNo" secondAttribute="top" constant="10" id="zRN-TF-2gS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addFavourite" destination="DeV-j9-DVT" id="Cpb-fV-GFT"/>
                 <outlet property="cityName" destination="isP-iP-3os" id="dWz-n4-gCY"/>
                 <outlet property="maximumTemperatureLabel" destination="FEE-dz-RcF" id="LeL-0Z-qEl"/>
                 <outlet property="minimumTemperatureLabel" destination="p9a-dK-eXB" id="KTo-ex-QJa"/>
@@ -168,8 +179,12 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="heart" width="48" height="48"/>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

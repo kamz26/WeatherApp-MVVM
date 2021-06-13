@@ -47,11 +47,43 @@ struct Main: Codable {
     }
 }
 
+extension Main{
+    var formattedMinTemp: String{
+        return "\(tempMin?.description ?? "") \u{00B0}"
+    }
+    
+    var formattedMaxTemp: String{
+        return "\(tempMax?.description ?? "") \u{00B0}"
+    }
+}
+
 // MARK: - Sys
 struct Sys: Codable {
     let type, id: Int?
     let country: String?
     let sunrise, sunset: Int?
+}
+
+extension Sys{
+    var sunriseFormattedTime: String{
+        // convert Int to TimeInterval (typealias for Double)
+        let timeInterval = TimeInterval(sunrise ?? 0)
+
+        // create NSDate from Double (NSTimeInterval)
+        let myDate = Date(timeIntervalSince1970: timeInterval)
+        
+        return myDate.toStringFormattedWith()
+    }
+    
+    var sunsetFormattedTime: String{
+        // convert Int to TimeInterval (typealias for Double)
+        let timeInterval = TimeInterval(sunset ?? 0)
+
+        // create NSDate from Double (NSTimeInterval)
+        let myDate = Date(timeIntervalSince1970: timeInterval)
+        
+        return myDate.toStringFormattedWith()
+    }
 }
 
 // MARK: - Weather
