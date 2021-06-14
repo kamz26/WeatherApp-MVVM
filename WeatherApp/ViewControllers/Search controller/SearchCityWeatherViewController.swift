@@ -74,13 +74,13 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
         switch category {
         case .recentSearch:
             cell.configureCell(with: listVm.citySearchResult[indexPath.row])
-            cell.addFavourite.addTapGestureRecognizer {
-                self.addToFav(index: indexPath.row)
+            cell.addFavourite.addTapGestureRecognizer { [weak self] in
+                self?.addToFav(index: indexPath.row)
             }
         case .fav:
             cell.configureCell(with: listVm.favSearchList[indexPath.row])
-            cell.addFavourite.addTapGestureRecognizer {
-                self.removeFromFav(index: indexPath.row)
+            cell.addFavourite.addTapGestureRecognizer { [weak self] in
+                self?.removeFromFav(index: indexPath.row)
             }
         case .none:
             return UITableViewCell()
@@ -89,17 +89,17 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func removeFromFav(index:Int){
-        listVm.removeFromFav(index: index) { (error) in
+        listVm.removeFromFav(index: index) { [weak self] (error) in
             if error == nil{
-                self.citySearchResultTableView.reloadAsync()
+                self?.citySearchResultTableView.reloadAsync()
             }
         }
     }
     
     func addToFav(index:Int){
-        listVm.addToFav(index: index){ error in
+        listVm.addToFav(index: index){ [weak self] error in
             if error == nil{
-                self.citySearchResultTableView.reloadAsync()
+                self?.citySearchResultTableView.reloadAsync()
             }
         }
         
@@ -113,10 +113,10 @@ extension SearchCityWeatherViewController: UISearchBarDelegate{
     }
     
     func getCityData(cityName:String){
-       listVm.getCityData(cityName: cityName) { (error) in
+       listVm.getCityData(cityName: cityName) {[weak self] (error) in
             if error == nil{
-                self.citySearchBar.text = ""
-                self.citySearchResultTableView.reloadAsync()
+                self?.citySearchBar.text = ""
+                self?.citySearchResultTableView.reloadAsync()
             }
         }
         
