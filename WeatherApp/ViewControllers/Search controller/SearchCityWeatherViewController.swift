@@ -117,6 +117,7 @@ extension SearchCityWeatherViewController: UISearchBarDelegate{
             if error == nil{
                 self?.citySearchBar.text = ""
                 self?.citySearchResultTableView.reloadAsync()
+                self?.view.endEditing(true)
             }
         }
         
