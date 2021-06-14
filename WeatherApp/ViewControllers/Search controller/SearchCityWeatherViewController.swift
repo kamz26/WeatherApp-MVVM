@@ -7,6 +7,21 @@
 
 import UIKit
 
+enum ListCategory:Int,CaseIterable{
+    case recentSearch
+    case fav
+    
+    var getTitle:String{
+        switch self {
+        case .recentSearch:
+            return "Recent Search"
+        case .fav:
+            return "Favourite"
+        }
+    }
+    
+}
+
 class SearchCityWeatherViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var citySearchResultTableView: UITableView!
@@ -42,10 +57,11 @@ class SearchCityWeatherViewController: UIViewController {
 //MARK: - Delegate and Datasource
 extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return ListCategory.allCases.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Recent Search" : "Favourite"
+        let category = ListCategory(rawValue: section)
+        return category?.getTitle
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? listVm.citySearchResult.count :  listVm.favSearchList.count
@@ -53,17 +69,21 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: CitySearchResultTableViewCell.self, for: indexPath)
+        let category = ListCategory(rawValue: indexPath.section)
         
-        if indexPath.section == 0{
-        cell.configureCell(with: listVm.citySearchResult[indexPath.row])
-        cell.addFavourite.addTapGestureRecognizer {
-            self.addToFav(index: indexPath.row)
-        }
-        }else{
+        switch category {
+        case .recentSearch:
+            cell.configureCell(with: listVm.citySearchResult[indexPath.row])
+            cell.addFavourite.addTapGestureRecognizer {
+                self.addToFav(index: indexPath.row)
+            }
+        case .fav:
             cell.configureCell(with: listVm.favSearchList[indexPath.row])
             cell.addFavourite.addTapGestureRecognizer {
                 self.removeFromFav(index: indexPath.row)
             }
+        case .none:
+            return UITableViewCell()
         }
         return cell
     }
