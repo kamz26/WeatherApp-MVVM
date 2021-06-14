@@ -12,8 +12,7 @@ import UIKit
 
 protocol DataStoreService {
     func add(model:Codable, completion:@escaping (Error?) -> Void)
-    func update(model:NSManagedObject)
-    func delete(mode:NSManagedObject)
+    func delete(model:Codable, completion:@escaping (Error?) -> Void)
     func fetchData() -> NSManagedObject?
 }
 
@@ -24,6 +23,7 @@ class WeatherListStoreService: DataStoreService{
     func add(model: Codable, completion:@escaping (Error?) -> Void) {
         
         if let weatherModel = model as? CitySearchViewModel{
+            
             let weather = LocalWeather(context: context)
             weather.isFav = true
             weather.locationName = weatherModel.name
@@ -32,8 +32,13 @@ class WeatherListStoreService: DataStoreService{
             weather.sunrise = weatherModel.sunrise
             weather.sunset = weatherModel.sunset
             
-            let weatherList = LocalWeatherList(context: context)
-            weatherList.addToWeatherList(weather)
+            
+            if let firstWeatherList = fetchData() as? LocalWeatherList{
+                firstWeatherList.addToWeatherList(weather)
+            }else{
+                let model = LocalWeatherList(context: context)
+                model.addToWeatherList(weather)
+            }
             
             do{
                 try context.save()
@@ -45,25 +50,38 @@ class WeatherListStoreService: DataStoreService{
         }
     }
     
-    func update(model: NSManagedObject) {
-        debugPrint("Update")
-    }
-    
-    func delete(mode: NSManagedObject) {
+    func delete(model: Codable, completion:@escaping (Error?) -> Void) {
         debugPrint("Delete")
+        
+        if let firstWeatherList = fetchData() as? LocalWeatherList, let weather = model as? CitySearchViewModel{
+            
+            for item  in firstWeatherList.weatherList ?? []{
+                if let localWeather = item as? LocalWeather{
+                    if localWeather.locationName == weather.name{
+                        context.delete(localWeather)
+                    }
+                }
+                
+            }
+        }
+        
+        do{
+            try context.save()
+            completion(nil)
+        }catch{
+            debugPrint(error)
+            completion(error)
+        }
     }
     
     func fetchData() -> NSManagedObject? {
-        
         do{
             let items =  try context.fetch(LocalWeatherList.fetchRequest()) as? [LocalWeatherList]
             return items?.first
         }catch{
-            
             debugPrint(error)
             return nil
         }
-        return nil
     }
     
 }

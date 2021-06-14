@@ -42,6 +42,14 @@ class ListViewModel{
         }
     }
     
+    func removeFromFav(index:Int, completion: @escaping (Error?) -> Void ){
+        weatherStorageService.delete(model: self.favSearchList[index]) { (error) in
+           if error == nil{
+                self.favSearchList.remove(at: index)
+            }
+            completion(error)
+        }
+    }
     
     func addToFav(index:Int, completion: @escaping (Error?) -> Void){
         weatherStorageService.add(model: self.citySearchResult[index]){ error in

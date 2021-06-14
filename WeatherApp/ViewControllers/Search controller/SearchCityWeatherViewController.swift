@@ -16,6 +16,7 @@ class SearchCityWeatherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
         self.listVm = ListViewModel()
         self.listVm.updateLocalFetch()
         viewSetup()
@@ -44,7 +45,7 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
         return 2
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? nil : "Favourite"
+        return section == 0 ? "Recent Search" : "Favourite"
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? listVm.citySearchResult.count :  listVm.favSearchList.count
@@ -60,17 +61,25 @@ extension SearchCityWeatherViewController: UITableViewDelegate, UITableViewDataS
         }
         }else{
             cell.configureCell(with: listVm.favSearchList[indexPath.row])
+            cell.addFavourite.addTapGestureRecognizer {
+                self.removeFromFav(index: indexPath.row)
+            }
         }
         return cell
+    }
+    
+    func removeFromFav(index:Int){
+        listVm.removeFromFav(index: index) { (error) in
+            if error == nil{
+                self.citySearchResultTableView.reloadAsync()
+            }
+        }
     }
     
     func addToFav(index:Int){
         listVm.addToFav(index: index){ error in
             if error == nil{
-                DispatchQueue.main.async {
-                    self.citySearchResultTableView.reloadAsync()
-                }
-                
+                self.citySearchResultTableView.reloadAsync()
             }
         }
         
